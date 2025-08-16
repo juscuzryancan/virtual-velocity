@@ -1,0 +1,38 @@
+{
+  "name": "virtual-traders-backend",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node index.ts",
+    "db:build": "ts-node ./db/init_db.ts",
+    "test": "jest --runInBand --verbose",
+    "test:watch": "jest --watchAll --runInBand --verbose",
+    "test:watch:db": "jest --watchAll db",
+    "test:watch:api": "jest --watchAll api"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1",
+    "stripe": "^8.126.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.3.0",
+    "@types/pg": "^8.15.5",
+    "nodemon": "^2.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
