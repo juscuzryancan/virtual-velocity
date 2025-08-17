@@ -6,7 +6,7 @@ import {
   createOrder,
   createUser,
   setUserAsAdmin,
-} from "./utils.js";
+} from "./utils";
 
 async function buildTables() {
   try {

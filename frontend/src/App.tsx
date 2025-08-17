@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import {
   Confirmation,
   Home,
@@ -8,7 +8,6 @@ import {
   Register,
   Account,
 } from "./components";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 
 const App = () => {

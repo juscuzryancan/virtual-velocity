@@ -6,6 +6,6 @@ const client = (process.env.NODE_ENV === 'production')
     connectionString: process.env.DATABASE_URL ,
     ssl: {rejectUnauthorized: false}
   }) 
-  : new Client('postgres://localhost:5432/graceshopper?sslmode=disable')
+  : new Client('postgres://postgres:postgres@localhost:5432/graceshopper?sslmode=disable')
 
 export { client };

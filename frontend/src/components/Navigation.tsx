@@ -1,11 +1,8 @@
-import { Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentToken } from "../redux/slices/authSlice";
 import Login from "./Login";
 import Logout from "./Logout";
-import Button from "react-bootstrap/Button";
 
 import {
   NavigationMenu,
@@ -24,14 +21,19 @@ type NavigationProps = {
 
 const Navigation = ({ setShowModal }: NavigationProps) => {
   const token = useAppSelector(selectCurrentToken);
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink>Link</NavigationMenuLink>
-          </NavigationMenuContent>
+          <NavigationMenuLink asChild>
+            <Link to="/">Virtual Traders</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild>
+            <Link to="/products">Products</Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

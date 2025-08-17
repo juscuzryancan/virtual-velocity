@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useCompleteOrderMutation } from '../redux/slices/ordersApiSlice';
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useCompleteOrderMutation } from "../redux/slices/ordersApiSlice";
 
 const Confirmation = () => {
   const { id } = useParams();
@@ -8,7 +8,7 @@ const Confirmation = () => {
 
   const handleConfirmation = async () => {
     await completeOrder(Number(id)).unwrap();
-  }
+  };
 
   useEffect(() => {
     handleConfirmation();
@@ -22,6 +22,6 @@ const Confirmation = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Confirmation;
