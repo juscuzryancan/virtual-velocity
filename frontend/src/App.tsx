@@ -16,7 +16,6 @@ const App = () => {
   return (
     <div className="flex flex-col">
       <Navigation setShowModal={setShowModal} />
-      <Register showModal={showModal} setShowModal={setShowModal} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />

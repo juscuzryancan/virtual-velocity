@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentToken } from "../redux/slices/authSlice";
+import { ShoppingCart } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,12 +14,13 @@ type NavigationProps = {
 };
 
 const Navigation = ({ setShowModal }: NavigationProps) => {
-  const token = useAppSelector(selectCurrentToken);
+  let token = useAppSelector(selectCurrentToken);
+  let numOfItems = 0;
 
   return (
-    <div className="flex w-full">
-      <NavigationMenu className="grow bg-slate-900 border-b border-slate-700 p-4">
-        <NavigationMenuList className="">
+    <div className="flex w-full justify-between items-center bg-slate-900 border-b border-slate-700 p-4">
+      <NavigationMenu>
+        <NavigationMenuList className="flex items-center space-x-6">
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link
@@ -30,41 +32,33 @@ const Navigation = ({ setShowModal }: NavigationProps) => {
             </NavigationMenuLink>
           </NavigationMenuItem>
 
-          {/* Right side - Navigation links grouped together */}
-          <div className="flex items-center space-x-4">
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild>
+              <Link to="/products" className="text-white hover:text-blue-400">
+                Products
+              </Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+
+          {token && (
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link to="/products" className="text-white hover:text-blue-400">
-                  Products
+                <Link to="/account" className="text-white hover:text-blue-400">
+                  Account
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-
-            {token && (
-              <>
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/account"
-                      className="text-white hover:text-blue-400"
-                    >
-                      Account
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link to="/cart" className="text-white hover:text-blue-400">
-                      Cart
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </>
-            )}
-          </div>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="grow bg-slate-900 border-b border-slate-700 p-4"></div>
+
+      <Link
+        to="/cart"
+        className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+      >
+        <ShoppingCart size={20} />
+        <span>Cart {numOfItems ? `(${numOfItems})` : ""}</span>
+      </Link>
     </div>
   );
 };
