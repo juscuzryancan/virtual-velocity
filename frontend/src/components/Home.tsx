@@ -1,103 +1,50 @@
-import { Link } from "react-router";
-import Card from "react-bootstrap/Card";
 import { ImageSlider, Contact } from "./";
 
-const Home = ({ products }: any) => {
+const Home = () => {
   return (
     <>
-      <div id="home-top" className="flex flex-col items-center relative">
+      <div id="home-top" className="flex flex-col items-center">
         <ImageSlider />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hero-text text-white">
-          <div className="flex flex-col items-center content-center p-8 bg-black/80 rounded">
-            <h1 className="text-5xl font-bold">Welcome to Virtual Traders</h1>
-            <p className="font-bold text-xl">Buy Trading Cards Online</p>
-            <Link
-              className="text-white p-2 rounded-sm bg-blue-600"
-              to="/products"
-            >
-              Start Trading
-            </Link>
+        <div className="flex flex-col items-center gap-6 py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Find hundreds of the most rare trading cards available!
+            </h2>
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              Virtual Traders specializes in the hard to find, extra special,
+              trading cards and collectables.
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="text-3xl mb-4">🔍</div>
+                <p className="font-semibold text-gray-800">
+                  Simply search our database of cards
+                </p>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="text-3xl mb-4">🎯</div>
+                <p className="font-semibold text-gray-800">
+                  Select the card you want
+                </p>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="text-3xl mb-4">🛒</div>
+                <p className="font-semibold text-gray-800">
+                  Add the card to your cart
+                </p>
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="text-3xl mb-4">🔒</div>
+                <p className="font-semibold text-gray-800">
+                  And checkout secured with Stripe
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2 py-2">
-          <h2>Find hundreds of the most rare trading cards available!</h2>
-          <p>
-            Virtual Traders specializes in the hard to find, extra special,
-            trading cards and collectables.
-          </p>
-
-          <p>Simply search our database of cards</p>
-          <p>Select the card you want</p>
-          <p>Add the card to your cart</p>
-          <p>And checkout secured with Stripe</p>
-          <h2 className="text-3xl">Recently Updated Products</h2>
-        </div>
       </div>
-
-      <div className="flex justify-around">
-        {products &&
-          products
-            .slice(0, 3)
-            .map(
-              ({
-                category,
-                price,
-                name,
-                id,
-                imageURL,
-                description,
-                inStock,
-              }: any) => {
-                return (
-                  <Card
-                    key={id}
-                    style={{
-                      width: "45vh",
-                      marginBottom: "5vh",
-                      minHeight: "58rem",
-                      boxShadow: "5px 5px 12px grey",
-                    }}
-                  >
-                    <Card.Img
-                      style={{ height: "65vh", width: "100%" }}
-                      variant="top"
-                      src={imageURL}
-                    />
-                    <Card.Body>
-                      <Card.Title>
-                        <b>Name:</b> {name}
-                      </Card.Title>
-                      <Card.Text>
-                        <b>Description:</b> {description}
-                      </Card.Text>
-                      <Card.Text>
-                        <b>Price:</b> ${price / 100.0}
-                      </Card.Text>
-                      <Card.Text>
-                        <b>Category:</b> {category}
-                      </Card.Text>
-                      <Card.Text>
-                        <b>In Stock:</b> {inStock ? "Yes" : "No"}
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                );
-              },
-            )}
-      </div>
-      <div
-        style={{ textAlign: "center", marginLeft: "25%", marginRight: "25%" }}
-      >
-        <h5 className="font-semibold">
-          Don't see exactly what you want? No need to trip potato chip, the
-          Virtual Trading crew has got you covered. Hop on over to our
-          <Link to="/products"> products</Link> to view them all or shoot us an
-          email for more information.
-        </h5>
-        <section id="contactTop">
-          <Contact />
-        </section>
-      </div>
+      <Contact />
     </>
   );
 };

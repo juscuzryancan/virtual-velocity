@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button } from "./ui/button";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "../redux/hooks";
 import { logOut } from "../redux/slices/authSlice";
