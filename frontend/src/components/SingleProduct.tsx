@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentToken } from "../redux/slices/authSlice";
@@ -22,6 +23,8 @@ type SingleProductProps = {
 
 const SingleProduct = ({ product }: SingleProductProps) => {
   const token = useAppSelector(selectCurrentToken);
+  const [isInCart, setIsInCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const [addProductToCart] = useAddProductToOrderMutation();
   const { data: cart } = useGetCartQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -30,6 +33,9 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   const { id, imageURL, name, description, category, inStock, price } = product;
 
   const handleAddToCart = async () => {
+    setIsInCart(true);
+    return;
+
     if (cart?.products.find((product) => product.id === id)) {
       swal({
         text: "Product is currently in your cart. You can modify the quantity in your cart",
@@ -55,18 +61,13 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   };
 
   return (
-    <Card className="h-[500px] w-[300px]">
+    <Card className="h-auto w-[320px]">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex justify-center items-center h-48 mb-4">
-          <img
-            className="max-h-full max-w-full object-contain"
-            src={imageURL}
-            alt={name}
-          />
+        <div className="flex justify-center items-center mb-4">
+          <img className="h-[320px] w-auto" src={imageURL} alt={name} />
         </div>
         <div className="space-y-2">
           <p className="text-sm text-gray-600">{category}</p>
@@ -74,18 +75,32 @@ const SingleProduct = ({ product }: SingleProductProps) => {
         </div>
       </CardContent>
       <CardFooter>
-        {inStock ? (
+        {!isInCart ? (
           <Button className="bg-blue-600 " onClick={handleAddToCart}>
             Add To Cart
           </Button>
         ) : (
-          <div className="flex justify-center p-2 m-4 bg-red-600 text-white">
-            Out of stock
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => setQuantity((quantity) => quantity - 1)}
+            >
+              -
+            </Button>
+            <p className="px-2 grow">{quantity}</p>
+            <Button
+              variant="outline"
+              onClick={() => setQuantity((quantity) => quantity + 1)}
+            >
+              +
+            </Button>
           </div>
         )}
       </CardFooter>
     </Card>
   );
+
+  /* {/* <div className="flex justify-center p-2 m-4 bg-red-600 text-white"> */ /*   Out of stock */ /* </div> */
 };
 
 export default SingleProduct;

@@ -1,41 +1,41 @@
-import { Order, OrderProduct } from '../../types';
-import apiSlice from './apiSlice';
+import { Order, OrderProduct } from "../../types";
+import apiSlice from "./apiSlice";
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getCart: builder.query<Order, void>({
-      query: () => '/orders/cart',
-      providesTags: ['Cart']
+      query: () => "/orders/cart",
+      providesTags: ["Cart"],
     }),
     getOrdersByUser: builder.query<Order[], void>({
-      query: () => '/orders/users',
-      providesTags: ['Orders']
+      query: () => "/orders/users",
+      providesTags: ["Orders"],
     }),
     addProductToOrder: builder.mutation<OrderProduct, OrderProduct>({
-      query: ({orderId, productId, price, quantity}) => ({
+      query: ({ orderId, productId, price, quantity }) => ({
         url: `/orders/${orderId}/products`,
-        method: 'POST',
+        method: "POST",
         body: {
           productId,
           price,
-          quantity
+          quantity,
         },
       }),
-      invalidatesTags: () => ['Cart']
+      invalidatesTags: () => ["Cart"],
     }),
     completeOrder: builder.mutation<void, number>({
       query: (orderId) => ({
         url: `/orders/${orderId}/complete`,
-        method: 'PATCH'
+        method: "PATCH",
       }),
-      invalidatesTags: () => ['Cart']
-    })
-  })
-})
+      invalidatesTags: () => ["Cart"],
+    }),
+  }),
+});
 
 export const {
   useGetCartQuery,
   useAddProductToOrderMutation,
   useGetOrdersByUserQuery,
-  useCompleteOrderMutation
+  useCompleteOrderMutation,
 } = ordersApiSlice;
