@@ -1,4 +1,8 @@
 import { useState } from "react";
+import {
+  useDeleteOrderProductMutation,
+  useUpdateOrderProductMutation,
+} from "../redux/slices/orderProductsApiSlice";
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "../redux/hooks";
 import { selectCurrentToken } from "../redux/slices/authSlice";
@@ -20,13 +24,44 @@ type SingleProductProps = {
 };
 
 const SingleProduct = ({ product }: SingleProductProps) => {
-  const token = useAppSelector(selectCurrentToken);
-  const [isInCart, setIsInCart] = useState(false);
-  const [quantity, setQuantity] = useState(1);
   const [addProductToCart] = useAddProductToOrderMutation();
+  const [updateOrderProduct] = useUpdateOrderProductMutation();
+  const [deleteOrderProduct] = useDeleteOrderProductMutation();
   const { data: cart } = useGetCartQuery(undefined);
-
   const { id, imageURL, name, description, category, inStock, price } = product;
+  const { quantity = undefined, orderProductId = undefined } = cart?.products.find((product) => product.id === id) || {};
+  const isInCart = cart?.products.some((product) => product.id === id);
+
+  console.log(orderProductId, quantity);
+
+  const handleIncrement = async () => {
+    if (!orderProductId || !quantity) {
+      return;
+    }
+    await updateOrderProduct({
+      id: orderProductId,
+      quantity: quantity + 1,
+      price,
+    }).unwrap();
+  };
+
+  const handleDecrement = async () => {
+    if (!orderProductId || !quantity) {
+      return;
+    }
+    if (quantity - 1 === 0) {
+      await deleteOrderProduct({
+        id: orderProductId,
+      }).unwrap();
+      return;
+    }
+
+    await updateOrderProduct({
+      id: orderProductId,
+      quantity: quantity - 1,
+      price,
+    }).unwrap();
+  };
 
   const handleAddToCart = async () => {
     try {
@@ -64,14 +99,14 @@ const SingleProduct = ({ product }: SingleProductProps) => {
           <div className="flex items-center gap-4">
             <Button
               variant="outline"
-              onClick={() => setQuantity((quantity) => quantity - 1)}
+              onClick={handleDecrement}
             >
               -
             </Button>
             <p className="px-2 grow">{quantity}</p>
             <Button
               variant="outline"
-              onClick={() => setQuantity((quantity) => quantity + 1)}
+              onClick={handleIncrement}
             >
               +
             </Button>

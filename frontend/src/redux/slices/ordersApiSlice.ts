@@ -21,7 +21,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
           quantity,
         },
       }),
-      invalidatesTags: () => [],
+      invalidatesTags: () => ["Cart"],
     }),
     completeOrder: builder.mutation<void, number>({
       query: (orderId) => ({

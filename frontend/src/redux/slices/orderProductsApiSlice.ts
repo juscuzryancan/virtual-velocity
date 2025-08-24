@@ -10,6 +10,7 @@ export const ordersProductsApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: orderProduct,
       }),
+      invalidatesTags: () => ["Cart"],
       async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           ordersApiSlice.util.updateQueryData(
@@ -37,6 +38,7 @@ export const ordersProductsApiSlice = apiSlice.injectEndpoints({
         url: `/order_products/${orderProduct.id}`,
         method: "DELETE",
       }),
+      invalidatesTags: () => ["Cart"],
       async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           ordersApiSlice.util.updateQueryData(

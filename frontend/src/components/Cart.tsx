@@ -30,7 +30,7 @@ const Cart = () => {
       return <div>empty cart</div>;
     } else {
       return cart?.products.map((product) => {
-        return <div>{product.name}</div>;
+        return <div key={product.id}>{product.name}</div>;
       });
     }
   };
