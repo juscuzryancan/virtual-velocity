@@ -1,11 +1,8 @@
-import { useState } from "react";
 import {
   useDeleteOrderProductMutation,
   useUpdateOrderProductMutation,
 } from "../redux/slices/orderProductsApiSlice";
 import { Button } from "@/components/ui/button";
-import { useAppSelector } from "../redux/hooks";
-import { selectCurrentToken } from "../redux/slices/authSlice";
 import {
   useAddProductToOrderMutation,
   useGetCartQuery,
@@ -29,10 +26,9 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   const [deleteOrderProduct] = useDeleteOrderProductMutation();
   const { data: cart } = useGetCartQuery(undefined);
   const { id, imageURL, name, description, category, inStock, price } = product;
-  const { quantity = undefined, orderProductId = undefined } = cart?.products.find((product) => product.id === id) || {};
+  const { quantity = undefined, orderProductId = undefined } =
+    cart?.products.find((product) => product.id === id) || {};
   const isInCart = cart?.products.some((product) => product.id === id);
-
-  console.log(orderProductId, quantity);
 
   const handleIncrement = async () => {
     if (!orderProductId || !quantity) {
@@ -97,17 +93,11 @@ const SingleProduct = ({ product }: SingleProductProps) => {
           </Button>
         ) : (
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              onClick={handleDecrement}
-            >
+            <Button variant="outline" onClick={handleDecrement}>
               -
             </Button>
             <p className="px-2 grow">{quantity}</p>
-            <Button
-              variant="outline"
-              onClick={handleIncrement}
-            >
+            <Button variant="outline" onClick={handleIncrement}>
               +
             </Button>
           </div>

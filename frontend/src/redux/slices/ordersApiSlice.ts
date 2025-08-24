@@ -7,8 +7,8 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       query: () => "/orders/cart",
       providesTags: ["Cart"],
     }),
-    getOrdersByUser: builder.query<Order[], void>({
-      query: () => "/orders/users",
+    getOrdersByUser: builder.query<Order[], string>({
+      query: (username) => `/orders/users/${username}`,
       providesTags: ["Orders"],
     }),
     addProductToOrder: builder.mutation<OrderProduct, OrderProduct>({

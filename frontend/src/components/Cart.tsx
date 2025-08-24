@@ -3,22 +3,29 @@ import { useAppSelector } from "../redux/hooks";
 import { selectCurrentToken } from "../redux/slices/authSlice";
 import { useGetCartQuery } from "../redux/slices/ordersApiSlice";
 import { useCreateStripeSessionMutation } from "../redux/slices/stripeApiSlice";
-import { Order, Product } from "../types";
+import { Order } from "../types";
 import CartItem from "./CartItem";
 import Loader from "./Loader";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Cart = () => {
   const token = useAppSelector(selectCurrentToken);
   const { data: cart, isLoading } = useGetCartQuery(undefined);
+  const subtotal = cart?.products
+    .reduce((agg, curr) => {
+      return (agg + curr.price * curr.quantity) / 100;
+    }, 0)
+    .toFixed(2);
 
-  // const [createStripeSession] = useCreateStripeSessionMutation();
+  const [createStripeSession] = useCreateStripeSessionMutation();
 
   const handleCheckoutSession = async () => {
-    // const { URL } = await createStripeSession({
-    //   cart: cart as Order,
-    //   baseURL: window.location.origin,
-    // }).unwrap();
-    // window.location.assign(URL);
+    console.log("hello");
+    const { URL } = await createStripeSession({
+      cart: cart as Order,
+      baseURL: window.location.origin,
+    }).unwrap();
+    window.location.assign(URL);
   };
 
   if (isLoading) {
@@ -30,7 +37,7 @@ const Cart = () => {
       return <div>empty cart</div>;
     } else {
       return cart?.products.map((product) => {
-        return <div key={product.id}>{product.name}</div>;
+        return <CartItem key={product.id} product={product} />;
       });
     }
   };
@@ -42,6 +49,16 @@ const Cart = () => {
       <Button onClick={handleCheckoutSession} type="submit" variant="outline">
         Checkout
       </Button>
+      <footer>
+        <Card>
+          <CardHeader>
+            <CardTitle>Subtotal: {subtotal}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            Shipping & Taxes: Will be calculated during checkout
+          </CardContent>
+        </Card>
+      </footer>
     </div>
   );
 };

@@ -120,21 +120,25 @@ ordersRouter.patch(
   },
 );
 
-ordersRouter.get("/users", requireUser, async (req: any, res, next) => {
-  const { username }: any = req.params;
-  try {
-    if (req.user.username !== username) {
-      res.status(403).send({
-        message: "Please request with the username tied to your token",
-      });
-      return;
-    }
+ordersRouter.get(
+  "/users/:username",
+  requireUser,
+  async (req: any, res, next) => {
+    const { username }: any = req.params;
+    try {
+      if (req.user.username !== username) {
+        res.status(403).send({
+          message: "Please request with the username tied to your token",
+        });
+        return;
+      }
 
-    const orders = await getOrdersByUser({ id: req.user.id });
-    res.send(orders);
-  } catch (error) {
-    next(error);
-  }
-});
+      const orders = await getOrdersByUser({ id: req.user.id });
+      res.send(orders);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 export default ordersRouter;

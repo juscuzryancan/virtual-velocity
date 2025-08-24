@@ -9,6 +9,7 @@ import {
   Register,
   Login,
 } from "./components";
+import { useGetMeQuery } from "./redux/slices/authApiSlice";
 
 const App = () => {
   return (

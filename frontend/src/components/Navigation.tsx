@@ -3,12 +3,13 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { logOut, selectCurrentToken } from "../redux/slices/authSlice";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useGetCartQuery } from "@/redux/slices/ordersApiSlice";
 
 const Navigation = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   let token = useAppSelector(selectCurrentToken);
-  let numOfItems = 34;
+  const { data: cart, isLoading } = useGetCartQuery(undefined);
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
@@ -43,7 +44,12 @@ const Navigation = () => {
                 Account
               </Link>
             </Button>
-            <Button onClick={handleSignOut}>Sign Out</Button>
+            <Button
+              className="bg-transparent text-white hover:underline underline-offset-4 hover:text-blue-400"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </Button>
           </>
         ) : (
           <>
@@ -65,7 +71,14 @@ const Navigation = () => {
         className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
       >
         <ShoppingCart size={20} />
-        <span>Cart {numOfItems ? `(${numOfItems})` : ""}</span>
+        <span>
+          Cart{" "}
+          {cart
+            ? `(${cart.products.reduce((prev, curr) => {
+                return prev + curr.quantity;
+              }, 0)})`
+            : "0"}
+        </span>
       </Link>
     </header>
   );

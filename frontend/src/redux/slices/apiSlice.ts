@@ -3,7 +3,7 @@ import { RootState } from "../store";
 
 const apiSlice = createApi({
   reducerPath: "api",
-  tagTypes: ["Cart", "Products", "Orders"],
+  tagTypes: ["Cart", "Products", "Orders", "Me"],
   baseQuery: fetchBaseQuery({
     baseUrl: "/api",
     prepareHeaders: (headers, { getState }) => {
