@@ -42,8 +42,8 @@ const Contact = () => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     setSent(true);
+    form.reset();
   };
 
   return (
@@ -144,12 +144,15 @@ const Contact = () => {
                   )}
                 />
 
-                <Button
-                  type="submit"
-                  className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium text-lg transition-all duration-300 transform hover:scale-[1.02]"
-                >
-                  Send Message
-                </Button>
+                <div className="rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="w-full h-12 hover:scale-[1.02] hover:text-white"
+                  >
+                    Send Message
+                  </Button>
+                </div>
               </form>
             </Form>
           </CardContent>

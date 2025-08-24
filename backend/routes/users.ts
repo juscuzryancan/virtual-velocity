@@ -1,7 +1,5 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-const { JWT_SECRET } = process.env;
-
 import {
   getUserByEmail,
   createUser,
@@ -11,15 +9,15 @@ import {
   getAllUsers,
   updateUser,
 } from "../db/utils";
-
 import { requireUser, isAdmin } from "./utils";
 
+const JWT_SECRET = process.env.JWT_SECRET;
 const usersRouter = express.Router();
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, firstName, lastName, email, isAdmin, imageURL } =
     req.body;
-  if (password.length <= 8) {
+  if (password.length < 8) {
     res.status(500).send({ message: "Password too short!" });
     return;
   }

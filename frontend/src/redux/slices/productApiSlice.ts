@@ -1,16 +1,13 @@
-import { Product } from '../../types';
-import apiSlice from './apiSlice';
-
+import { Product } from "../../types";
+import apiSlice from "./apiSlice";
 
 export const productApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getProducts: builder.query<Product[], void>({
-      query: () => '/products',
-      providesTags: ['Products']
+      query: () => "/products",
+      providesTags: ["Products"],
     }),
-  })
-})
+  }),
+});
 
-export const {
-  useGetProductsQuery
-} = productApiSlice;
+export const { useGetProductsQuery } = productApiSlice;

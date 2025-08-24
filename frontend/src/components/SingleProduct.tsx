@@ -9,9 +9,7 @@ import {
 import { Product } from "../types";
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -26,24 +24,11 @@ const SingleProduct = ({ product }: SingleProductProps) => {
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [addProductToCart] = useAddProductToOrderMutation();
-  const { data: cart } = useGetCartQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-  });
+  const { data: cart } = useGetCartQuery(undefined);
 
   const { id, imageURL, name, description, category, inStock, price } = product;
 
   const handleAddToCart = async () => {
-    setIsInCart(true);
-    return;
-
-    if (cart?.products.find((product) => product.id === id)) {
-      swal({
-        text: "Product is currently in your cart. You can modify the quantity in your cart",
-        icon: "warning",
-      });
-      return;
-    }
-
     try {
       await addProductToCart({
         orderId: cart?.id,
@@ -51,10 +36,6 @@ const SingleProduct = ({ product }: SingleProductProps) => {
         price,
         quantity: 1,
       }).unwrap();
-      swal({
-        text: "Product has been added to your cart. You can modify the quantity in your cart",
-        icon: "success",
-      });
     } catch (error) {
       console.error(error);
     }

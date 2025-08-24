@@ -5,20 +5,20 @@ import {
   Cart,
   Navigation,
   Products,
-  Register,
   Account,
+  Register,
+  Login,
 } from "./components";
-import { useState } from "react";
 
 const App = () => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
   return (
     <div className="flex flex-col">
-      <Navigation setShowModal={setShowModal} />
+      <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/account" element={<Account />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders/:id" element={<Confirmation />} />

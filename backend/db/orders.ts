@@ -1,5 +1,7 @@
 import { client } from "./";
 
+type Order = {};
+
 const reduceOrders = (queriedOrders) => {
   const ordersWithProducts = queriedOrders.reduce((acc, order) => {
     const {
@@ -51,7 +53,7 @@ const reduceOrders = (queriedOrders) => {
   return Object.values(ordersWithProducts);
 };
 
-const getOrderById = async (id) => {
+export const getOrderById = async (id: number): Promise<Order> => {
   try {
     const { rows: orders } = await client.query(
       `
@@ -86,7 +88,7 @@ const getOrderById = async (id) => {
 };
 
 //  select and return an array of orders, include their products
-const getAllOrders = async () => {
+export const getAllOrders = async () => {
   try {
     const { rows: orders } = await client.query(`
         SELECT
@@ -117,7 +119,7 @@ const getAllOrders = async () => {
 };
 
 //  select and return an array of orders made by user, inlude their products
-const getOrdersByUser = async ({ id }) => {
+export const getOrdersByUser = async ({ id }) => {
   try {
     const { rows: orders } = await client.query(
       `
@@ -154,7 +156,7 @@ const getOrdersByUser = async ({ id }) => {
 };
 
 //  select and return an array of orders which have a specific productId in their order_products join, include their products
-const getOrdersByProduct = async ({ id }) => {
+export const getOrdersByProduct = async ({ id }) => {
   try {
     const { rows: orders } = await client.query(
       `
@@ -196,7 +198,7 @@ const getOrdersByProduct = async ({ id }) => {
 //  select one user's order (look up by orders."userId")
 //  ...an order that that has status = created
 //  return the order, include the order's products
-const getCartByUser = async ({ id }) => {
+export const getCartByUser = async ({ id }) => {
   try {
     const { rows: orders } = await client.query(
       `
@@ -234,7 +236,7 @@ const getCartByUser = async ({ id }) => {
 };
 
 //  create and return the new order
-const createOrder = async ({ status, userId }) => {
+export const createOrder = async ({ status, userId }) => {
   try {
     const {
       rows: [order],
@@ -252,7 +254,7 @@ const createOrder = async ({ status, userId }) => {
   }
 };
 
-const updateOrder = async ({ id, ...fields }) => {
+export const updateOrder = async ({ id, ...fields }) => {
   const fieldKeys = Object.keys(fields);
 
   const setString = fieldKeys
@@ -289,7 +291,7 @@ const updateOrder = async ({ id, ...fields }) => {
 // Find the order with id equal to the passed in id
 // Only update the status to completed
 // Return the updated order
-const completeOrder = async ({ id }) => {
+export const completeOrder = async ({ id }) => {
   try {
     const {
       rows: [order],
@@ -310,7 +312,7 @@ const completeOrder = async ({ id }) => {
 };
 
 // Update the order's status to cancelled
-const cancelOrder = async (id) => {
+export const cancelOrder = async (id) => {
   try {
     const {
       rows: [order],
@@ -327,16 +329,4 @@ const cancelOrder = async (id) => {
   } catch (error) {
     throw error;
   }
-};
-
-export {
-  getOrderById,
-  getAllOrders,
-  getOrdersByUser,
-  getOrdersByProduct,
-  getCartByUser,
-  createOrder,
-  updateOrder,
-  completeOrder,
-  cancelOrder,
 };

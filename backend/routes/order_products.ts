@@ -12,7 +12,6 @@ const orderProductsRouter = express.Router();
 
 orderProductsRouter.patch(
   "/:orderProductId",
-  requireUser,
   async (req: any, res, next: any) => {
     const { orderProductId } = req.params;
     const { price, quantity } = req.body;

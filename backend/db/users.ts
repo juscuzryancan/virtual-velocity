@@ -2,7 +2,13 @@ import { client } from "./";
 import bcrypt from "bcrypt";
 const SALT_COUNT = 10;
 
-async function createUser({ username, password, firstName, lastName, email }) {
+async function createUser({
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+}): Promise<any> {
   try {
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
 
@@ -25,7 +31,7 @@ async function createUser({ username, password, firstName, lastName, email }) {
   }
 }
 
-async function setUserAsAdmin(id) {
+async function setUserAsAdmin(id: number) {
   try {
     await client.query(
       `
@@ -41,7 +47,13 @@ async function setUserAsAdmin(id) {
   }
 }
 
-async function getUser({ username, password }) {
+async function getUser({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) {
   try {
     const {
       rows: [user],

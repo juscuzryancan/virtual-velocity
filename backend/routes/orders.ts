@@ -23,13 +23,28 @@ ordersRouter.get("/", [requireUser, isAdmin], async (req, res, next) => {
   }
 });
 
-ordersRouter.get("/cart", requireUser, async (req: any, res, next: any) => {
+ordersRouter.get("/cart", async (req: any, res, next: any) => {
   try {
-    let cart = await getCartByUser(req.user);
+    let cart;
+    if (!req.user) {
+      // create an empty cart here with no user id
+      cart = await createOrder({ status: "created", userId: null });
+      cart.products = [];
+      res.send(cart);
+      return;
+    }
+
+    // Try to grab the cart
+    cart = await getCartByUser(req.user);
+
+    // If theres no cart then create an empty cart
     if (!cart) {
       cart = await createOrder({ status: "created", userId: req.user.id });
+      cart.products = [];
     }
+
     res.send(cart);
+    return;
   } catch (error) {
     next(error);
   }
@@ -71,7 +86,7 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
-ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
+ordersRouter.post("/:orderId/products", async (req, res, next) => {
   const { orderId } = req.params;
   const { productId, price, quantity } = req.body;
 
