@@ -298,7 +298,7 @@ export const completeOrder = async ({ id }) => {
     } = await client.query(
       `
     UPDATE orders
-    SET status = 'completed'
+    SET status = 'completed', "datePlaced" = CURRENT_TIMESTAMP
     WHERE id = $1
     RETURNING *;
 `,

@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes } from "react-router";
 import {
   Confirmation,
@@ -9,7 +10,6 @@ import {
   Register,
   Login,
 } from "./components";
-import { useGetMeQuery } from "./redux/slices/authApiSlice";
 
 const App = () => {
   return (

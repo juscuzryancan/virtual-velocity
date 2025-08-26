@@ -36,7 +36,7 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       status STATUS_ENUMS DEFAULT 'created',
       "userId" INTEGER REFERENCES users(id),
-      "datePlaced" DATE DEFAULT CURRENT_DATE
+      "datePlaced" DATE DEFAULT CURRENT_TIMESTAMP
     );
     CREATE TABLE products(
       id SERIAL PRIMARY KEY,

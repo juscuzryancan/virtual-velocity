@@ -1,35 +1,38 @@
-import axios from 'axios';
-const API_URL = '/api';
+import axios from "axios";
+const API_URL = "/api";
 
 export const fetchProducts = async () => {
   try {
     const { data: products } = await axios.get(`${API_URL}/products`);
     return products;
   } catch (error) {
-    console.error('Failed to fetch products');
+    console.error("Failed to fetch products");
     throw error;
   }
-}
+};
 
-export const login = async (username: string, password: string) => {
+export const login = async (username: any, password: any) => {
   try {
-    const { data:token } = await axios.post(`${API_URL}/users/login`, {username, password});
+    const { data: token } = await axios.post(`${API_URL}/users/login`, {
+      username,
+      password,
+    });
     return token;
   } catch (error) {
-    console.error('Error while logging in')
+    console.error("Error while logging in");
     throw error;
   }
-}
+};
 
 export const register = async (user: any) => {
   try {
     const { data } = await axios.post(`${API_URL}/users/register`, user);
     return data;
   } catch (error) {
-    console.error('Error while registering');
+    console.error("Error while registering");
     throw error;
   }
-}
+};
 
 export const getUser = async (token: string) => {
   try {
@@ -40,10 +43,10 @@ export const getUser = async (token: string) => {
     });
     return data;
   } catch (error) {
-    console.error('Error while getting user');
+    console.error("Error while getting user");
     throw error;
   }
-}
+};
 
 export const getCart = async (token: string) => {
   try {
@@ -56,9 +59,9 @@ export const getCart = async (token: string) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
-export const createPaymentIntent = async ({products}: any) => {
+export const createPaymentIntent = async ({ products }: any) => {
   try {
     const {
       data: { clientSecret: paymentIntent },
@@ -73,27 +76,37 @@ export const createPaymentIntent = async ({products}: any) => {
 
 export const confirmOrder = async (token: string, orderId: any) => {
   try {
-    const {
-      data
-    } = await axios.patch(`${API_URL}/orders/${orderId}/complete`, '', {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const { data } = await axios.patch(
+      `${API_URL}/orders/${orderId}/complete`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
-    return data
+    );
+    return data;
   } catch (error) {
     throw error;
   }
-}
+};
 
-export const addProductToOrder = async (token: string, orderId: any, product: any) =>{
+export const addProductToOrder = async (
+  token: string,
+  orderId: any,
+  product: any,
+) => {
   try {
-    await axios.post(`${API_URL}/orders/${orderId}/products`, {...product, productId: product.id}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    })
+    await axios.post(
+      `${API_URL}/orders/${orderId}/products`,
+      { ...product, productId: product.id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   } catch (error) {
     throw error;
   }
-} 
+};
