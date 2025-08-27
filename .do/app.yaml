@@ -14,16 +14,19 @@ ingress:
           prefix: /
 region: sfo
 services:
-  - environment_slug: node-js
+  - name: virtual-velocity
+    source_dir: /backend
+    build_command: |
+      npm install
+    environment_slug: node-js
     envs:
       - key: DATABASE_URL
-        scope: RUN_TIME
-        value: ${virtual-velocity-db.DATABASE_URL}
+    scope: RUN_TIME
+    value: ${virtual-velocity-db.DATABASE_URL}
     github:
-      branch: main
-      repo: juscuzryancan/virtual-velocity
+    branch: main
+    deploy_on_push: main
+    repo: juscuzryancan/virtual-velocity
     http_port: 8080
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
-    name: virtual-velocity
-    source_dir: /backend
