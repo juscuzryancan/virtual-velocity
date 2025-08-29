@@ -8,7 +8,7 @@
     "outDir": "dist",
     "rootDir": ".",
     "lib": ["es2020"],
-    "types": ["node", "jest"],
+    "types": ["node"],
     "skipLibCheck": true
   },
   "include": ["**/*.ts"],
@@ -19,6 +19,10 @@
     "../frontend/**/*",
     "../**/*.tsx",
     "../**/*.jsx",
-    "../node_modules"
+    "../node_modules",
+     "**/*.test.ts",
+    "**/*.spec.ts", 
+    "jest.config.js",
+    "node_modules"
   ]
 }

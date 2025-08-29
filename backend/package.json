@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --skipLibCheck",
     "start": "node dist/index.js",
     "dev": "nodemon index.ts",
-    "db:build": "ts-node ./db/init_db.ts",
+    "db:build": "npx ts-node ./db/init_db.ts",
     "test": "jest --runInBand --verbose",
     "test:watch": "jest --watchAll --runInBand --verbose",
     "test:watch:db": "jest --watchAll db",
@@ -20,7 +20,9 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.2.1",
-    "stripe": "^8.126.0"
+    "stripe": "^8.126.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
@@ -31,8 +33,6 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.3.0",
     "@types/pg": "^8.15.5",
-    "nodemon": "^2.0.22",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "nodemon": "^2.0.22"
   }
 }
